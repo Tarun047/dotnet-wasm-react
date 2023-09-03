@@ -1,0 +1,36 @@
+{
+  "name": "compressy-frontend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack serve",
+    "build": "webpack",
+    "clean-vendor": "rm -rf public/vendor",
+    "publish:dotnet": "dotnet publish ../ -c Release",
+    "copy-vendor": "cp -R ../bin/Release/net8.0/browser-wasm/AppBundle public/vendor",
+    "publish": "npm run clean-vendor && npm run publish:dotnet && npm run copy-vendor && npm run build"
+  },
+  "dependencies": {
+    "node-polyfill-webpack-plugin": "^2.0.1",
+    "pako": "^2.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/copy-webpack-plugin": "^10.1.0",
+    "@types/node": "^18.11.18",
+    "@types/pako": "^2.0.0",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "@types/webpack": "^5.28.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.3",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
