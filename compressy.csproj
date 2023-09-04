@@ -8,6 +8,10 @@
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>full</TrimMode>
     <RunAOTCompilation>true</RunAOTCompilation>
+    <WasmNativeDebugSymbols>true</WasmNativeDebugSymbols>
+    <WasmNativeStrip>false</WasmNativeStrip>
+    <EmccInitialHeapSize>100MB</EmccInitialHeapSize>
+    <EmccStackSize>50MB</EmccStackSize>
   </PropertyGroup>
 
   <ItemGroup>
