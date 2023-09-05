@@ -5,10 +5,7 @@
   "scripts": {
     "dev": "webpack serve",
     "build": "webpack",
-    "clean-vendor": "rm -rf public/vendor",
-    "publish:dotnet": "dotnet publish ../ -c Release",
-    "copy-vendor": "cp -R ../bin/Release/net8.0/browser-wasm/AppBundle public/vendor",
-    "publish": "npm run clean-vendor && npm run publish:dotnet && npm run copy-vendor && npm run build"
+    "publish:dotnet": "dotnet publish ../ -c Release"
   },
   "dependencies": {
     "node-polyfill-webpack-plugin": "^2.0.1",

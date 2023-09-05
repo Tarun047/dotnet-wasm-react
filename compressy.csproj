@@ -9,9 +9,26 @@
         <PublishTrimmed>true</PublishTrimmed>
         <TrimMode>full</TrimMode>
         <WasmEnableSIMD>true</WasmEnableSIMD>
+        <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
 
     <ItemGroup>
-        <WasmExtraFilesToDeploy Include="main.js"/>
+        <WasmExtraFilesToDeploy Include="main.js" />
     </ItemGroup>
+    
+    <Target Name="RemoveVendor" BeforeTargets="WasmTriggerPublishApp">
+        <ItemGroup>
+            <Vendor Include="$(ProjectDir)compressy-frontend\public\vendor" />
+        </ItemGroup>
+        <RemoveDir Directories="@(Vendor)" />
+        <Message Importance="high" Text="Removed Vendor" />
+    </Target>
+
+    <Target Name="CopyVendor" AfterTargets="WasmTriggerPublishApp">
+        <ItemGroup>
+            <AppBundle Include="$(ProjectDir)bin\Release\net8.0\browser-wasm\AppBundle\**\*.*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(AppBundle)" DestinationFiles="@(AppBundle->'$(ProjectDir)compressy-frontend\public\vendor\%(RecursiveDir)%(Filename)%(Extension)')" />
+        <Message Importance="high" Text="Copied App Bundle to Vendor" />
+    </Target>
 </Project>
