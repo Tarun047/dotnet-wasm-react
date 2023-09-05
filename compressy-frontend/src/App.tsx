@@ -12,7 +12,12 @@ function App() {
         setNonNativeWorker(nonNativeWorker);
         const nativeWorker = new Worker(new URL('workers/native-worker', import.meta.url), {type: "module"});
         nativeWorker.onmessage = handleNativeWorkerMessage
-        setNativeWorker(nativeWorker)
+        setNativeWorker(nativeWorker);
+
+        return () => {
+            nonNativeWorker.removeEventListener('message', handleNonNativeWorkerMessage);
+            nativeWorker.removeEventListener('message', handleNativeWorkerMessage);
+        }
     }, [])
 
     function handleNonNativeWorkerMessage(event: MessageEvent<WorkerMessage<unknown>>) {
@@ -22,6 +27,7 @@ function App() {
         } else if (workerEvent.type == WorkerMessageType.FinishedCompression) {
             const result = workerEvent.data as WorkerCompressionResult;
             setNonNativeResult(`Non native worker finished Compressing ${result.data.length} bytes in ${result.time} ms`)
+            downloadFile("non-native.gzip", result.data);
         }
     }
 
@@ -32,7 +38,16 @@ function App() {
         } else if (workerEvent.type == WorkerMessageType.FinishedCompression) {
             const result = workerEvent.data as WorkerCompressionResult;
             setNativeResult(`Native Worker finished Compressing to ${result.data.length} bytes in ${result.time} ms`)
+            downloadFile("native.gzip", result.data);
         }
+    }
+
+    function downloadFile(fileName: string, bytes: Uint8Array) {
+        // const blob = new Blob([bytes], {type: "application/gzip"});
+        // const link = document.createElement('a');
+        // link.href = window.URL.createObjectURL(blob);
+        // link.download = fileName;
+        // link.click();
     }
 
     async function handleNonNativeUpload(event: ChangeEvent<HTMLInputElement>) {

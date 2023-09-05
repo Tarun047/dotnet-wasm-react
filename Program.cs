@@ -11,7 +11,7 @@ public partial class Compressor
 	{
 		
 	}
-	
+
 	[JSExport]
 	internal static byte[] GzipCompress(byte[] data)
 	{
@@ -27,7 +27,7 @@ public partial class Compressor
 		}
 		catch (Exception e)
 		{
-			Console.WriteLine(e.StackTrace);
+			Console.WriteLine(e.ToString());
 		}
 
 		return Array.Empty<byte>();
